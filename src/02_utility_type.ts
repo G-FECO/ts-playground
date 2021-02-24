@@ -112,3 +112,23 @@ console.log({...comments});
 // 특정 타입에서 null or undefined를 제외하고 리턴
 type InitType = Phone[] | keyof Post | null | undefined | '' | 0;
 type NotNullish = NonNullable<InitType>; // "" | 0 | Phone[] | "content" | "user"
+
+
+// (8) ReturnType
+// 함수의 리턴 타입을 가져온다.
+
+// type ReturnType<T extends (...args: any) => any> = T extends (...args: any) => infer R ? R : any;
+// R 타입에 대해서 타입 추론(infer)이 가능하다면 R 타입을 그렇지 않다면 any 타입을 반환한다.
+// 주로 Redux에서 ActionCreator 함수에서 활용한다고 한다.
+const func1 = () => ({'name': 'wally', 'age': 28});
+type T0 = ReturnType<() => number>; // number
+type T1 = ReturnType<(s: string) => void>; // void
+type T2 = ReturnType<typeof func1>; // { name: string; age: number; }
+// ReturnType<typeof func> : func에 들어갈 함수 결과의 타입을 가져오는 기능
+
+
+// (부록) 프론트상에서 백엔드 API 상에서 어떤 타입으로 오겠다고 interface를 정의하지만
+// 간혹 예상하지 못하게 undefined나 null 타입이 오는 경우가 발생한다.
+// 그래서 이와 같이 타입이 명확하지 않은 경우를 대비하여 Nullable한 타입과 분리하여 Maybe라는 커스텀 유틸리티 타입을 구성할 수 있다.
+// 이 때 제네릭으로 원래 정의한 타입을 넣어주면 된다.
+type Maybe<T> = T | undefined | null;
