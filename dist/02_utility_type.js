@@ -55,3 +55,9 @@ var comments = {
     },
 };
 console.log(__assign({}, comments));
+// (8) ReturnType
+// 함수의 리턴 타입을 가져온다.
+// type ReturnType<T extends (...args: any) => any> = T extends (...args: any) => infer R ? R : any;
+// R 타입에 대해서 타입 추론(infer)이 가능하다면 R 타입을 그렇지 않다면 any 타입을 반환한다.
+// 주로 Redux에서 ActionCreator 함수에서 활용한다고 한다.
+var func1 = function () { return ({ 'name': 'wally', 'age': 28 }); };
